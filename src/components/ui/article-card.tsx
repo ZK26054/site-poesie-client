@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 type ArticleCardProps = {
   article: {
+    slug?: string;
     title: string;
     date: string;
     category: string;
@@ -8,7 +11,7 @@ type ArticleCardProps = {
 };
 
 export function ArticleCard({ article }: ArticleCardProps) {
-  return (
+  const card = (
     <article className="border border-[#322a24] bg-[#15110f] p-6">
       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#c7a46c]">
         {article.category}
@@ -21,5 +24,15 @@ export function ArticleCard({ article }: ArticleCardProps) {
         {article.excerpt}
       </p>
     </article>
+  );
+
+  if (!article.slug) {
+    return card;
+  }
+
+  return (
+    <Link className="block transition-colors hover:border-[#c7a46c]" href={`/actualites/${article.slug}`}>
+      {card}
+    </Link>
   );
 }

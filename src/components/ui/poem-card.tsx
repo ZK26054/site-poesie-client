@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 type PoemCardProps = {
   poem: {
+    slug?: string;
     title: string;
     origin: string;
     lines: string[];
@@ -7,7 +10,7 @@ type PoemCardProps = {
 };
 
 export function PoemCard({ poem }: PoemCardProps) {
-  return (
+  const card = (
     <article className="border border-[#322a24] bg-[#15110f] p-6 sm:p-8">
       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#c7a46c]">
         {poem.origin}
@@ -23,5 +26,15 @@ export function PoemCard({ poem }: PoemCardProps) {
         ))}
       </div>
     </article>
+  );
+
+  if (!poem.slug) {
+    return card;
+  }
+
+  return (
+    <Link className="block transition-colors hover:border-[#c7a46c]" href={`/lecture/${poem.slug}`}>
+      {card}
+    </Link>
   );
 }

@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 type BookCardProps = {
   book: {
+    slug?: string;
     title: string;
     year: string;
     publisher: string;
@@ -10,7 +13,7 @@ type BookCardProps = {
 };
 
 export function BookCard({ book }: BookCardProps) {
-  return (
+  const card = (
     <article className="flex min-h-96 flex-col justify-between border border-[#322a24] bg-[#15110f] p-6">
       <div>
         <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-[0.22em] text-[#8f806f]">
@@ -42,5 +45,15 @@ export function BookCard({ book }: BookCardProps) {
         ))}
       </div>
     </article>
+  );
+
+  if (!book.slug) {
+    return card;
+  }
+
+  return (
+    <Link className="block transition-colors hover:border-[#c7a46c]" href={`/recueils/${book.slug}`}>
+      {card}
+    </Link>
   );
 }
